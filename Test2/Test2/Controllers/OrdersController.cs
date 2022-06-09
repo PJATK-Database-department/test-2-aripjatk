@@ -47,7 +47,7 @@ namespace Test2.Controllers {
             } catch(ArgumentException) {
                 return NotFound();
             } catch(AccessViolationException) {
-                return Forbid();
+                return BadRequest();
             }
         }
     }

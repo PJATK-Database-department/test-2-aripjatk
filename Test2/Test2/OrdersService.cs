@@ -35,9 +35,9 @@ namespace Test2 {
             var oldOrder = (from order in DbContext.ClientOrder
                          where order.IdClientOrder == IDOrder
                          select order).Single();
-            if (!(oldOrder.CompletionDate == null))
+            if (!(oldOrder.CompletionDate is null))
                 throw new AccessViolationException();
-            if (!(NewOrderItems.Union(DbContext.Confectionery).Equals(DbContext.Confectionery)))
+            if (!(NewOrderItems.All(conf => DbContext.Confectionery.Contains(conf))))
                 throw new ArgumentException();
             oldOrder.OrderDate = NewOrder.OrderDate;
             oldOrder.CompletionDate = NewOrder.CompletionDate;
