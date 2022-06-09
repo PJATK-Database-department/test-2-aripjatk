@@ -23,6 +23,7 @@ namespace Test2 {
         public void ConfigureServices(IServiceCollection services) {
             services.AddControllers();
             services.AddDbContext<OrdersDbContext>(builder => builder.UseSqlServer("Data Source=db-mssql;Initial Catalog=s22796;Integrated Security=True"));
+            services.AddScoped<IOrdersService, OrdersService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -32,7 +33,10 @@ namespace Test2 {
             }
 
             app.UseRouting();
-
+            app.UseCors(x => x.AllowAnyMethod()
+            .AllowAnyHeader()
+            .SetIsOriginAllowed(origin => true)
+            .AllowCredentials());
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints => {

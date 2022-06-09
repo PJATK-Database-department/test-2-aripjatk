@@ -8,6 +8,7 @@ namespace Test2 {
     public interface IOrdersService {
         public IEnumerable<ClientOrder> GetOrdersForClient(int IDClient);
         public IEnumerable<Confectionery_ClientOrder> GetConfectioneryItemsForOrder(ClientOrder order);
-        public Task UpdateOrderAsync(int IDOrder, ClientOrder NewOrder, IEnumerable<Confectionery> NewOrderItems);
+        public Confectionery GetConfectioneryByID(int IDConfectionery);
+        public Task<ClientOrder> UpdateOrderAsync(int IDOrder, ClientOrder NewOrder, IEnumerable<Confectionery> NewOrderItems);
     }
 }

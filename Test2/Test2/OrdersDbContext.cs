@@ -13,5 +13,10 @@ namespace Test2 {
         public DbSet<ClientOrder> ClientOrder { get; set; }
         public DbSet<Confectionery_ClientOrder> Confectionery_ClientOrder { get; set; }
         public DbSet<Employee> Employee { get; set; }
+        
+        protected override void OnModelCreating(ModelBuilder builder) {
+            builder.Entity<Confectionery_ClientOrder>()
+                .HasKey(orders => new { orders.IdClientOrder, orders.IdConfectionery });
+        }
     }
 }

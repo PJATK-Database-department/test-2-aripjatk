@@ -11,7 +11,7 @@ namespace Test2.Models {
         public int IdClientOrder { get; set; }
         [Required]
         public DateTime OrderDate { get; set; }
-        public DateTime CompletionDate { get; set; }
+        public DateTime? CompletionDate { get; set; }
         [MaxLength(300)]
         public string Comments { get; set; }
         public int IdClient { get; set; }

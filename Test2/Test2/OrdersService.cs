@@ -11,6 +11,12 @@ namespace Test2 {
             DbContext = Context;
         }
 
+        public Confectionery GetConfectioneryByID(int IDConfectionery) {
+            return (from confectionery in DbContext.Confectionery
+                    where confectionery.IdConfectionery == IDConfectionery
+                    select confectionery).Single();
+        }
+
         public IEnumerable<Confectionery_ClientOrder> GetConfectioneryItemsForOrder(ClientOrder order) {
             var result = from item in DbContext.Confectionery_ClientOrder
                          where item.IdClientOrder == order.IdClientOrder
@@ -25,12 +31,12 @@ namespace Test2 {
             return result;
         }
 
-        public async Task UpdateOrderAsync(int IDOrder, ClientOrder NewOrder, IEnumerable<Confectionery> NewOrderItems) {
+        public async Task<ClientOrder> UpdateOrderAsync(int IDOrder, ClientOrder NewOrder, IEnumerable<Confectionery> NewOrderItems) {
             var oldOrder = (from order in DbContext.ClientOrder
                          where order.IdClientOrder == IDOrder
                          select order).Single();
             if (!(oldOrder.CompletionDate == null))
-                throw new InvalidOperationException();
+                throw new AccessViolationException();
             if (!(NewOrderItems.Union(DbContext.Confectionery).Equals(DbContext.Confectionery)))
                 throw new ArgumentException();
             oldOrder.OrderDate = NewOrder.OrderDate;
@@ -39,6 +45,7 @@ namespace Test2 {
             oldOrder.IdClient = NewOrder.IdClient;
             oldOrder.IdEmployee = NewOrder.IdEmployee;
             await DbContext.SaveChangesAsync();
+            return oldOrder;
         }
     }
 }

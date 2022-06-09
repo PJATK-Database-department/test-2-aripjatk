@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Test2;
 
 namespace Test2.Migrations
 {
     [DbContext(typeof(OrdersDbContext))]
-    partial class OrdersDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220609092311_NullCompletionDate")]
+    partial class NullCompletionDate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -98,9 +100,6 @@ namespace Test2.Migrations
                     b.Property<int>("IdClientOrder")
                         .HasColumnType("int");
 
-                    b.Property<int>("IdConfectionery")
-                        .HasColumnType("int");
-
                     b.Property<int>("Amount")
                         .HasColumnType("int");
 
@@ -108,7 +107,10 @@ namespace Test2.Migrations
                         .HasColumnType("nvarchar(300)")
                         .HasMaxLength(300);
 
-                    b.HasKey("IdClientOrder", "IdConfectionery");
+                    b.Property<int>("IdConfectionery")
+                        .HasColumnType("int");
+
+                    b.HasKey("IdClientOrder");
 
                     b.HasIndex("IdConfectionery");
 
